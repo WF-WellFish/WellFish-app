@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">WellFish</string>
+    <string name="home">Home</string>
+    <string name="camera">Classification</string>
+    <string name="history">History</string>
+    <string name="setting">Setting</string>
+    //
+    <string name="skip">Skip</string>
+    <string name="next">Next</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_onboarding">Welcome to WellFish!</string>
+    <string name="description_onboarding">WellFish helps you identify fish species and detect diseases. Ensure the quality and safety of your seafood with ease.</string>
+    <string name="title_onboarding_2">"Use your phone\'s camera for real-time fish disease detection. "</string>
+    <string name="description_onboarding_2">Simply point your camera at the fish, and get instant results on its species and any potential diseases.</string>
+    <string name="title_onboarding_3">Easily upload a photo of your fish to get an instant classification.</string>
+    <string name="description_onboarding_3">Our app will identify the species and check for any signs of disease.</string>
+    //
+    <string name="description_welcome">Sign in, sign up, or continue as a guest to start using WellFish. WellFish is here to help you make informed choices about your seafood.</string>
+    <string name="login">Login</string>
+    <string name="signup">Register</string>
+    <string name="guest">Continue as guest</string>
+    <string name="title_login">Welcome back!</string>
+    <string name="description_login">Enter your credential to login</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="name">Name</string>
+    //
+    <string name="invalid_username">Invalid username. Only letters, numbers, underscores, and dashes are allowed.</string>
+    <string name="password_error"><![CDATA[>Password must not be less than 8 characters.]]></string>
+    //
+
+
+</resources>
