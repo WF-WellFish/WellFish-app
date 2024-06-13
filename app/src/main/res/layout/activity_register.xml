@@ -156,7 +156,7 @@
         android:layout_width="wrap_content"
         android:layout_height="64dp"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.1" />
+        app:layout_constraintGuide_percent="0.09956236" />
 
     <ProgressBar
         android:id="@+id/pbLoading"

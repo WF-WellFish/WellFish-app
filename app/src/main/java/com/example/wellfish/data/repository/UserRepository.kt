@@ -7,10 +7,12 @@ import com.example.wellfish.data.pref.UserModel
 import com.example.wellfish.data.pref.UserPreference
 import com.example.wellfish.data.response.ErrorResponse
 import com.example.wellfish.data.response.LoginResponse
+import com.example.wellfish.data.response.LogoutResponse
 import com.example.wellfish.data.response.RegisterResponse
 import com.example.wellfish.ui.utils.ResultState
 import com.google.gson.Gson
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import retrofit2.HttpException
 import java.io.IOException
 
@@ -71,12 +73,56 @@ class UserRepository private constructor(
         }
     }
 
+    //new3/3
+    /*
+    fun logout(): LiveData<ResultState<LogoutResponse>> = liveData {
+        emit(ResultState.Loading)
+        val session = userPreference.getSession().first()
+        val token = session.token
+
+        try {
+            val response = apiService.logout("Bearer $token")
+            if (response.status == "success") {
+                userPreference.logout()
+                emit(ResultState.Success(response))
+            } else {
+                if (response.message == "Unauthenticated.") {
+                    userPreference.logout()
+                }
+                emit(ResultState.Error(response.message ?: "Unknown error"))
+            }
+        } catch (e: HttpException) {
+            val error = e.response()?.errorBody()?.string()
+            if (error != null) {
+                try {
+                    val errorResponse = Gson().fromJson(error, ErrorResponse::class.java)
+                    emit(ResultState.Error(errorResponse.message))
+                } catch (e: Exception) {
+                    emit(ResultState.Error("Error parsing error response"))
+                }
+            } else {
+                emit(ResultState.Error("Unknown error"))
+            }
+        } catch (e: IOException) {
+            emit(ResultState.Error("Network error, please try again"))
+        } catch (e: Exception) {
+            emit(ResultState.Error("Unknown error"))
+        }
+    }
+    */
+
+
     suspend fun saveSession(user: UserModel) {
         userPreference.saveSession(user)
     }
 
     fun getSession(): Flow<UserModel> {
         return userPreference.getSession()
+    }
+
+    //new done
+    suspend fun logout(){
+        userPreference.logout()
     }
 
     companion object {

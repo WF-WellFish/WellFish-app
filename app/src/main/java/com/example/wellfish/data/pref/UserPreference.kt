@@ -1,6 +1,7 @@
 package com.example.wellfish.data.pref
 
 import android.content.Context
+import android.util.Log
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
@@ -19,7 +20,7 @@ class UserPreference private constructor(private val dataStore: DataStore<Prefer
             preferences[USERNAME_KEY] = user.username
             preferences[PASSWORD_KEY] = user.password
             preferences[TOKEN_KEY] = user.token
-            preferences[IS_LOGIN_KEY] = user.isLogin //true
+            preferences[IS_LOGIN_KEY] = true
         }
     }
 
@@ -31,6 +32,13 @@ class UserPreference private constructor(private val dataStore: DataStore<Prefer
                 preferences[TOKEN_KEY] ?: "",
                 preferences[IS_LOGIN_KEY] ?: false
             )
+        }
+    }
+
+    //new done
+    suspend fun logout() {
+        dataStore.edit { preferences ->
+            preferences.clear()
         }
     }
 
@@ -51,5 +59,4 @@ class UserPreference private constructor(private val dataStore: DataStore<Prefer
             }
         }
     }
-
 }
