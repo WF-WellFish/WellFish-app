@@ -49,6 +49,17 @@
             android:src="@drawable/profile_pic"
             app:civ_border_color="@color/white"
             app:civ_border_width="4dp" />
+
+        <TextView
+            android:id="@+id/tv_changeProfilePicture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="20dp"
+            android:text="@string/change_profile_picture"
+            android:textColor="@color/black"
+            android:textSize="14sp" />
     </RelativeLayout>
 
     <ImageView
@@ -80,62 +91,46 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="55dp"
+        android:layout_marginTop="56dp"
         android:text="@string/name_edit_profile"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/iv_border_editProfile" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/edit_text_layout_name"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+    <EditText
+        android:id="@+id/edit_text_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="48dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="40dp"
         android:layout_marginEnd="32dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tv_name"
-        app:layout_constraintTop_toBottomOf="@+id/iv_border_editProfile">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edit_text_name"
-            android:layout_width="match_parent"
-            android:layout_height="50dp" />
-    </com.google.android.material.textfield.TextInputLayout>
+        app:layout_constraintTop_toBottomOf="@+id/iv_border_editProfile"/>
 
     <TextView
         android:id="@+id/tv_username"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="38dp"
+        android:layout_marginTop="39dp"
         android:text="@string/username_edit_profile"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_text_layout_name" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_name" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/edit_text_layout_username"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+    <EditText
+        android:id="@+id/edit_text_username"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="32dp"
+        android:editable="false"
+        android:focusable="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tv_username"
-        app:layout_constraintTop_toBottomOf="@+id/edit_text_layout_name">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edit_text_username"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="?attr/editTextBackground"
-            android:editable="false"
-            android:focusable="false" />
-
-    </com.google.android.material.textfield.TextInputLayout>
+        app:layout_constraintTop_toBottomOf="@+id/edit_text_name" />
 
     <Button
         android:id="@+id/button"

@@ -5,16 +5,22 @@
         android:icon="@drawable/ic_baseline_home_24"
         android:title="@string/home" />
     <item
+        android:id="@+id/tab_fish"
+        android:icon="@drawable/ic_fish_42"
+        android:title="@string/fish_classification" />
+
+    <item
         android:id="@+id/tab_camera"
         android:icon="@drawable/ic_baseline_camera_alt_24"
-        android:title="@string/camera" />
+        android:title="@string/camera"/>
+
     <item
         android:id="@+id/tab_history"
-        android:icon="@drawable/ic_history_21"
+        android:icon="@drawable/ic_baseline_history_24"
         android:title="@string/history" />
     <item
         android:id="@+id/tab_setting"
-        android:icon="@drawable/ic_settings_84"
+        android:icon="@drawable/ic_baseline_settings_24"
         android:title="@string/setting" />
 
 </menu>

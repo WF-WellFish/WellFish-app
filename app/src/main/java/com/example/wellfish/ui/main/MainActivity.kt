@@ -14,6 +14,7 @@ import com.example.wellfish.data.pref.UserPreference
 import com.example.wellfish.data.pref.dataStore
 import com.example.wellfish.databinding.ActivityMainBinding
 import com.example.wellfish.ui.camera.CameraFragment
+import com.example.wellfish.ui.camera.FishFragment
 import com.example.wellfish.ui.history.HistoryFragment
 import com.example.wellfish.ui.home.HomeFragment
 import com.example.wellfish.ui.onboarding.OnboardingActivity
@@ -38,6 +39,7 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNavigation.setOnItemSelectedListener {
             when(it.itemId){
                 R.id.tab_home -> replaceFragment(HomeFragment())
+                R.id.tab_fish -> replaceFragment(FishFragment())
                 R.id.tab_camera -> replaceFragment(CameraFragment())
                 R.id.tab_history -> replaceFragment(HistoryFragment())
                 R.id.tab_setting -> replaceFragment(SettingFragment())

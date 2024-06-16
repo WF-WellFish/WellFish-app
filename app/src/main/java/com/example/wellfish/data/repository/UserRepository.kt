@@ -1,18 +1,24 @@
 package com.example.wellfish.data.repository
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.liveData
 import com.example.wellfish.data.api.ApiService
 import com.example.wellfish.data.pref.UserModel
 import com.example.wellfish.data.pref.UserPreference
+import com.example.wellfish.data.response.ClassificationErrors
+import com.example.wellfish.data.response.ClassificationFishErrorResponse
+import com.example.wellfish.data.response.ClassificationFishResponse
 import com.example.wellfish.data.response.ErrorResponse
 import com.example.wellfish.data.response.LoginResponse
-import com.example.wellfish.data.response.LogoutResponse
+//import com.example.wellfish.data.response.LogoutResponse
 import com.example.wellfish.data.response.RegisterResponse
 import com.example.wellfish.ui.utils.ResultState
 import com.google.gson.Gson
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
+import okhttp3.MultipartBody
 import retrofit2.HttpException
 import java.io.IOException
 
@@ -20,6 +26,9 @@ class UserRepository private constructor(
     private val userPreference: UserPreference,
     private val apiService: ApiService
 ){
+
+    private val _classificationResult = MutableLiveData<ResultState<ClassificationFishResponse>>()
+    val classificationResult: LiveData<ResultState<ClassificationFishResponse>> get() = _classificationResult
 
     fun signup(name: String, username: String, password: String): LiveData<ResultState<RegisterResponse>> = liveData {
         emit(ResultState.Loading)
@@ -111,6 +120,31 @@ class UserRepository private constructor(
     }
     */
 
+    fun classifyFish(image: MultipartBody.Part): LiveData<ResultState<ClassificationFishResponse>> = liveData {
+        emit(ResultState.Loading)
+        try {
+            val token = userPreference.getSession().first().token
+            val response = apiService.classifyFish("Bearer $token", image)
+            emit(ResultState.Success(response))
+        } catch (e: HttpException) {
+            val error = e.response()?.errorBody()?.string()
+            if (error != null) {
+                try {
+                    val errorResponse = Gson().fromJson(error, ClassificationFishErrorResponse::class.java)
+                    val errorMessage = errorResponse.data?.errors?.image?.joinToString(", ") ?: errorResponse.message ?: "Unknown error"
+                    emit(ResultState.Error(errorMessage))
+                } catch (e: Exception) {
+                    emit(ResultState.Error("Error parsing error response"))
+                }
+            } else {
+                emit(ResultState.Error("Unknown error"))
+            }
+        } catch (e: IOException) {
+            emit(ResultState.Error("Network error, please try again"))
+        } catch (e: Exception) {
+            emit(ResultState.Error("Unknown error"))
+        }
+    }
 
     suspend fun saveSession(user: UserModel) {
         userPreference.saveSession(user)

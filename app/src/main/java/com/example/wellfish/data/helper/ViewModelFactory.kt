@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.wellfish.data.di.Injection
 import com.example.wellfish.data.repository.UserRepository
+import com.example.wellfish.ui.camera.ClassificationViewModel
 import com.example.wellfish.ui.login.LoginViewModel
 import com.example.wellfish.ui.register.RegisterViewModel
 import com.example.wellfish.ui.setting.SettingFragmentViewModel
@@ -22,6 +23,9 @@ class ViewModelFactory(private val repository: UserRepository) : ViewModelProvid
             }
             modelClass.isAssignableFrom(SettingFragmentViewModel::class.java) -> {
                 SettingFragmentViewModel(repository) as T
+            }
+            modelClass.isAssignableFrom(ClassificationViewModel::class.java) -> {
+                ClassificationViewModel(repository) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel Class: " + modelClass.name)
         }
