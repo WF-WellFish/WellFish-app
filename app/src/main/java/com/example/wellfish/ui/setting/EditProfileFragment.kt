@@ -13,6 +13,7 @@ import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.example.wellfish.R
 import com.example.wellfish.data.helper.ViewModelFactory
+import com.example.wellfish.data.pref.UserModel
 import com.example.wellfish.data.response.EditProfileData
 import com.example.wellfish.data.response.EditProfileUser
 import com.example.wellfish.databinding.FragmentEditProfileBinding
@@ -84,6 +85,23 @@ class EditProfileFragment : Fragment() {
                     result.data.data?.user.let { user ->
                         if (user != null) {
                             updateUI(user)
+
+                            // save the new user data to the shared preferences
+                            // get old user model
+                            val oldUser = viewModel.currentUser.value
+
+                            // save the new user model
+                            viewModel.saveSession(
+                                UserModel(
+                                    user.id.toString(),
+                                    user.name.toString(),
+                                    oldUser?.username.toString(),
+                                    oldUser?.password.toString(),
+                                    user.profilePicture.toString(),
+                                    oldUser?.token.toString(),
+                                    oldUser?.isLogin ?: false
+                                )
+                            )
                         }
                     }
                 }
@@ -110,8 +128,13 @@ class EditProfileFragment : Fragment() {
 
     private val launcherGallery = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
         if (uri != null) {
+            // set the image to the image view
             imageUri = uri
             binding.ivProfilePicture.setImageURI(uri)
+            Glide.with(this)
+                .load(uri)
+                .placeholder(R.drawable.ic_place_holder)
+                .into(binding.ivProfilePicture)
         }
     }
 

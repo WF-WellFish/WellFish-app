@@ -45,4 +45,10 @@ class EditProfileViewModel(private val repository: UserRepository) : ViewModel()
             }
         }
     }
+
+    fun saveSession(userModel: UserModel) {
+        viewModelScope.launch {
+            repository.saveSession(userModel)
+        }
+    }
 }
