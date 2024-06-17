@@ -9,6 +9,7 @@ import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import com.example.wellfish.databinding.ActivityWelcomeBinding
 import com.example.wellfish.ui.login.LoginActivity
+import com.example.wellfish.ui.main.MainActivity
 import com.example.wellfish.ui.register.RegisterActivity
 
 class WelcomeActivity : AppCompatActivity() {
@@ -43,6 +44,11 @@ class WelcomeActivity : AppCompatActivity() {
 
         binding.registerButtonWelcome.setOnClickListener {
             startActivity(Intent(this@WelcomeActivity, RegisterActivity::class.java))
+        }
+
+        binding.tvContinueAsGuest.setOnClickListener { val intent = Intent(this@WelcomeActivity, MainActivity::class.java)
+            intent.putExtra("IS_GUEST", true)
+            startActivity(intent)
         }
     }
 }

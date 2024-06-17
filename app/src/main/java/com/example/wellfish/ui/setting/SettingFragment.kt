@@ -35,11 +35,17 @@ class SettingFragment : Fragment() {
 
 
         editProfileLayout.setOnClickListener {
-
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.frame_layout, EditProfileFragment())
+                .addToBackStack(null)
+                .commit()
         }
 
         changePasswordLayout.setOnClickListener {
-
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.frame_layout, ChangePasswordFragment())
+                .addToBackStack(null)
+                .commit()
         }
 
         logoutLayout.setOnClickListener {

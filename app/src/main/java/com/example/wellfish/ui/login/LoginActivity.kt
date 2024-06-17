@@ -69,10 +69,13 @@ class LoginActivity : AppCompatActivity() {
                             Toast.makeText(this@LoginActivity, "Login successful!", Toast.LENGTH_SHORT).show()
                             saveSession(
                                 UserModel(
-                                    user.name!!,
-                                    user.id.toString(),
-                                    token,
-                                    true
+                                    id = user.id.toString(),
+                                    name = user.name!!,
+                                    username = username,
+                                    password = password,
+                                    profilePicture = user.profilePicture?.toString() ?: "",
+                                    token = token,
+                                    isLogin = true
                                 )
                             )
                         } else {

@@ -1,15 +1,18 @@
 package com.example.wellfish.data.api
 
 import com.example.wellfish.data.response.ClassificationFishResponse
+import com.example.wellfish.data.response.EditProfileResponse
 import com.example.wellfish.data.response.LoginResponse
 import com.example.wellfish.data.response.RegisterResponse
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Response
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.Header
 import retrofit2.http.Multipart
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Part
 
 interface ApiService {
@@ -43,4 +46,13 @@ interface ApiService {
         @Header("Authorization") token: String,
         @Part image: MultipartBody.Part
     ): ClassificationFishResponse
+
+    @Multipart
+    @POST("profile")
+    suspend fun updateProfile(
+        @Header("Authorization") token: String,
+        @Part("name") name: RequestBody,
+        @Part("_method") method: RequestBody,
+        @Part profilePicture: MultipartBody.Part?
+    ): Response<EditProfileResponse>
 }

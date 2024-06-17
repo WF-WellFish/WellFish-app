@@ -27,6 +27,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var sharedPreferences: SharedPreferences
+    private var isGuest: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +35,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         sharedPreferences = getSharedPreferences("onboarding_pref", MODE_PRIVATE) //onboarding flag start
+
+        isGuest = intent.getBooleanExtra("IS_GUEST", false)
 
         replaceFragment(HomeFragment())
         binding.bottomNavigation.setOnItemSelectedListener {
@@ -68,7 +71,7 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this@MainActivity, OnboardingActivity::class.java)
             startActivity(intent)
             finish()
-        } else if (!isLoggedIn) {
+        } else if (!isLoggedIn && !isGuest) {
             val intent = Intent(this@MainActivity, WelcomeActivity::class.java)
             startActivity(intent)
             finish()

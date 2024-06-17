@@ -1,14 +1,15 @@
 package com.example.wellfish.data.repository
 
+import android.util.Log
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.liveData
 import com.example.wellfish.data.api.ApiService
 import com.example.wellfish.data.pref.UserModel
 import com.example.wellfish.data.pref.UserPreference
-import com.example.wellfish.data.response.ClassificationErrors
 import com.example.wellfish.data.response.ClassificationFishErrorResponse
 import com.example.wellfish.data.response.ClassificationFishResponse
+import com.example.wellfish.data.response.EditProfileErrorResponse
+import com.example.wellfish.data.response.EditProfileResponse
 import com.example.wellfish.data.response.ErrorResponse
 import com.example.wellfish.data.response.LoginResponse
 //import com.example.wellfish.data.response.LogoutResponse
@@ -17,8 +18,9 @@ import com.example.wellfish.ui.utils.ResultState
 import com.google.gson.Gson
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.runBlocking
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.HttpException
 import java.io.IOException
 
@@ -26,9 +28,6 @@ class UserRepository private constructor(
     private val userPreference: UserPreference,
     private val apiService: ApiService
 ){
-
-    private val _classificationResult = MutableLiveData<ResultState<ClassificationFishResponse>>()
-    val classificationResult: LiveData<ResultState<ClassificationFishResponse>> get() = _classificationResult
 
     fun signup(name: String, username: String, password: String): LiveData<ResultState<RegisterResponse>> = liveData {
         emit(ResultState.Loading)
@@ -133,6 +132,46 @@ class UserRepository private constructor(
                     val errorResponse = Gson().fromJson(error, ClassificationFishErrorResponse::class.java)
                     val errorMessage = errorResponse.data?.errors?.image?.joinToString(", ") ?: errorResponse.message ?: "Unknown error"
                     emit(ResultState.Error(errorMessage))
+                } catch (e: Exception) {
+                    emit(ResultState.Error("Error parsing error response"))
+                }
+            } else {
+                emit(ResultState.Error("Unknown error"))
+            }
+        } catch (e: IOException) {
+            emit(ResultState.Error("Network error, please try again"))
+        } catch (e: Exception) {
+            emit(ResultState.Error("Unknown error"))
+        }
+    }
+
+    fun updateProfile(name: String, profilePicture: MultipartBody.Part?): LiveData<ResultState<EditProfileResponse>> = liveData {
+        emit(ResultState.Loading)
+        try {
+            val token = "Bearer ${userPreference.getSession().first().token}"
+            val nameRequestBody = name.toRequestBody("text/plain".toMediaTypeOrNull())
+            val methodRequestBody = "PUT".toRequestBody("text/plain".toMediaTypeOrNull())
+
+            Log.d("UserRepository", "Updating profile with name: $name and profilePicture: $profilePicture")
+
+            val response = apiService.updateProfile(token, nameRequestBody, methodRequestBody, profilePicture)
+
+            if (response.isSuccessful) {
+                response.body()?.let {
+                    emit(ResultState.Success(it))
+                    Log.d("UserRepository", "Profile update successful: $it")
+                } ?: emit(ResultState.Error("Unknown error: response body is null"))
+            } else {
+                val errorBody = response.errorBody()?.string()
+                val errorResponse = Gson().fromJson(errorBody, EditProfileErrorResponse::class.java)
+                emit(ResultState.Error(errorResponse.message ?: "Unknown error"))
+            }
+        } catch (e: HttpException) {
+            val error = e.response()?.errorBody()?.string()
+            if (error != null) {
+                try {
+                    val errorResponse = Gson().fromJson(error, EditProfileErrorResponse::class.java)
+                    emit(ResultState.Error(errorResponse.message ?: "Unknown error"))
                 } catch (e: Exception) {
                     emit(ResultState.Error("Error parsing error response"))
                 }

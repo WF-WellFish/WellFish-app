@@ -37,7 +37,7 @@ class HomeFragment : Fragment() {
         val userPreference = UserPreference.getInstance(requireContext().dataStore)
         lifecycleScope.launch {
             userPreference.getSession().collect { user ->
-                val greeting = getString(R.string.greeting_home) + " " + user.username
+                val greeting = getString(R.string.greeting_home) + " " + user.name
                 binding.tvNameHome.text = greeting
             }
         }
