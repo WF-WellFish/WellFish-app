@@ -58,7 +58,7 @@
     <string name="border">border</string>
     <string name="icon_people">icon people</string>
     <string name="arrow">arrow</string>
-    <string name="desc_change_password">Your password must be at least 6 characters and should include a combination of numbers.</string>
+    <string name="desc_change_password">Your password must be at least 8 characters and should include a combination of numbers.</string>
     <string name="current_password">Current Password</string>
     <string name="new_password">New Password</string>
     <string name="retype_new_password">Retype New Password</string>

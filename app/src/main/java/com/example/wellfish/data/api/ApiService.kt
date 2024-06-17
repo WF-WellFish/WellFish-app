@@ -1,5 +1,6 @@
 package com.example.wellfish.data.api
 
+import com.example.wellfish.data.response.ChangePasswordResponse
 import com.example.wellfish.data.response.ClassificationFishResponse
 import com.example.wellfish.data.response.EditProfileResponse
 import com.example.wellfish.data.response.LoginResponse
@@ -54,4 +55,12 @@ interface ApiService {
         @Part("_method") method: RequestBody,
         @Part profilePicture: MultipartBody.Part?
     ): Response<EditProfileResponse>
+
+    @FormUrlEncoded
+    @POST("change-password")
+    suspend fun changePassword(
+        @Field("old_password") oldPassword: String,
+        @Field("new_password") newPassword: String,
+        @Field("new_password_confirmation") newPasswordConfirmation: String
+    ): ChangePasswordResponse
 }

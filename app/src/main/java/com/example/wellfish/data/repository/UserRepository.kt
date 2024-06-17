@@ -6,6 +6,9 @@ import androidx.lifecycle.liveData
 import com.example.wellfish.data.api.ApiService
 import com.example.wellfish.data.pref.UserModel
 import com.example.wellfish.data.pref.UserPreference
+import com.example.wellfish.data.response.ChangePasswordErrorResponse
+import com.example.wellfish.data.response.ChangePasswordErrors
+import com.example.wellfish.data.response.ChangePasswordResponse
 import com.example.wellfish.data.response.ClassificationFishErrorResponse
 import com.example.wellfish.data.response.ClassificationFishResponse
 import com.example.wellfish.data.response.EditProfileErrorResponse
@@ -124,7 +127,7 @@ class UserRepository private constructor(
         try {
             //val token = userPreference.getSession().first().token
             //val response = apiService.classifyFish("Bearer $token", image)
-            val response = apiService.classifyFish( image) //baru
+            val response = apiService.classifyFish(image) //baru
             emit(ResultState.Success(response))
         } catch (e: HttpException) {
             val error = e.response()?.errorBody()?.string()
@@ -174,6 +177,49 @@ class UserRepository private constructor(
                 try {
                     val errorResponse = Gson().fromJson(error, EditProfileErrorResponse::class.java)
                     emit(ResultState.Error(errorResponse.message ?: "Unknown error"))
+                } catch (e: Exception) {
+                    emit(ResultState.Error("Error parsing error response"))
+                }
+            } else {
+                emit(ResultState.Error("Unknown error"))
+            }
+        } catch (e: IOException) {
+            emit(ResultState.Error("Network error, please try again"))
+        } catch (e: Exception) {
+            emit(ResultState.Error("Unknown error"))
+        }
+    }
+
+    fun changePassword(oldPassword: String, newPassword: String, newPasswordConfirmation: String): LiveData<ResultState<ChangePasswordResponse>> = liveData {
+        emit(ResultState.Loading)
+        val session = userPreference.getSession().first()
+        val token = session.token
+        try {
+            val response = apiService.changePassword(
+                oldPassword = oldPassword,
+                newPassword = newPassword,
+                newPasswordConfirmation = newPasswordConfirmation
+            )
+
+            if (response.status == "success") {
+                emit(ResultState.Success(response))
+            } else {
+                val errorMessage = response.message ?: "Unknown error"
+                emit(ResultState.Error(errorMessage))
+            }
+        } catch (e: HttpException) {
+            val error = e.response()?.errorBody()?.string()
+            if (error != null) {
+                try {
+                    val errorResponse = Gson().fromJson(error, ChangePasswordErrorResponse::class.java)
+                    val detailedErrors = errorResponse.data?.errors
+                    val errorMessage = detailedErrors?.let { errors ->
+                        listOfNotNull(
+                            errors.oldPassword?.joinToString(", "),
+                            errors.newPassword?.joinToString(", ")
+                        ).joinToString("; ")
+                    } ?: errorResponse.message ?: "Unknown error"
+                    emit(ResultState.Error(errorMessage))
                 } catch (e: Exception) {
                     emit(ResultState.Error("Error parsing error response"))
                 }

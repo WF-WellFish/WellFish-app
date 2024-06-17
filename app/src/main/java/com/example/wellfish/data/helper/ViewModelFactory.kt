@@ -9,6 +9,7 @@ import com.example.wellfish.data.repository.UserRepository
 import com.example.wellfish.ui.camera.ClassificationViewModel
 import com.example.wellfish.ui.login.LoginViewModel
 import com.example.wellfish.ui.register.RegisterViewModel
+import com.example.wellfish.ui.setting.ChangePasswordViewModel
 import com.example.wellfish.ui.setting.EditProfileViewModel
 import com.example.wellfish.ui.setting.SettingFragmentViewModel
 
@@ -31,6 +32,9 @@ class ViewModelFactory(private val repository: UserRepository) : ViewModelProvid
             }
             modelClass.isAssignableFrom(EditProfileViewModel::class.java) -> {
                 EditProfileViewModel(repository) as T
+            }
+            modelClass.isAssignableFrom(ChangePasswordViewModel::class.java) -> {
+                ChangePasswordViewModel(repository) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel Class: " + modelClass.name)
         }

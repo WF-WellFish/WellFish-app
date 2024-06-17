@@ -1,13 +1,15 @@
 package com.example.wellfish.ui.setting
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.wellfish.data.helper.ViewModelFactory
 import com.example.wellfish.databinding.FragmentChangePasswordBinding
+import com.example.wellfish.ui.utils.ResultState
 
 class ChangePasswordFragment : Fragment() {
     private val viewModel: ChangePasswordViewModel by viewModels {
@@ -28,9 +30,57 @@ class ChangePasswordFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.btnBack.setOnClickListener{
+        binding.btnBack.setOnClickListener {
             requireActivity().supportFragmentManager.popBackStack()
+        }
+
+        binding.button.setOnClickListener {
+            val oldPassword = binding.editTextCurrentPassword.editText?.text.toString()
+            val newPassword = binding.editTextNewPassword.editText?.text.toString()
+            val newPasswordConfirmation = binding.editTextRetypeNewPassword.editText?.text.toString()
+
+            if (oldPassword.isBlank()) {
+                binding.editTextCurrentPassword.error = "Current password is required"
+                return@setOnClickListener
+            }
+
+            if (newPassword.isBlank()) {
+                binding.editTextNewPassword.error = "New password is required"
+                return@setOnClickListener
+            }
+
+            if (newPasswordConfirmation.isBlank()) {
+                binding.editTextRetypeNewPassword.error = "Please retype the new password"
+                return@setOnClickListener
+            }
+
+            if (newPassword != newPasswordConfirmation) {
+                binding.editTextRetypeNewPassword.error = "Passwords do not match"
+                return@setOnClickListener
+            }
+
+            viewModel.changePassword(oldPassword, newPassword, newPasswordConfirmation)
+        }
+
+        viewModel.changePasswordResult.observe(viewLifecycleOwner) { result ->
+            when (result) {
+                is ResultState.Loading -> {
+                    binding.pbLoading.visibility = View.VISIBLE
+                }
+                is ResultState.Success -> {
+                    binding.pbLoading.visibility = View.GONE
+                    Toast.makeText(requireContext(), "Password changed successfully", Toast.LENGTH_SHORT).show()
+                }
+                is ResultState.Error -> {
+                    binding.pbLoading.visibility = View.GONE
+                    Toast.makeText(requireContext(), result.error, Toast.LENGTH_SHORT).show()
+                }
+            }
         }
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }

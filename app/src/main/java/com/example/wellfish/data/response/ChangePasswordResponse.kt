@@ -5,7 +5,8 @@ import com.google.gson.annotations.SerializedName
 data class ChangePasswordResponse(
 
 	@field:SerializedName("data")
-	val data: Data? = null,
+	//val data: Data? = null,
+	val data: ChangePasswordData? = null,
 
 	@field:SerializedName("message")
 	val message: String? = null,
@@ -17,3 +18,5 @@ data class ChangePasswordResponse(
 data class ChangePasswordData(
 	val any: Any? = null
 )
+
+
