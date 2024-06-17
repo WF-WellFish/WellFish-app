@@ -5,7 +5,8 @@ import com.google.gson.annotations.SerializedName
 data class ChangePasswordErrorResponse(
 
 	@field:SerializedName("data")
-	val data: Data? = null,
+	//val data: Data? = null,
+	val data: ChangePasswordErrorData? = null,
 
 	@field:SerializedName("message")
 	val message: String? = null,
@@ -14,10 +15,12 @@ data class ChangePasswordErrorResponse(
 	val status: String? = null
 )
 
-data class ChangePasswordAData(
+
+data class ChangePasswordErrorData(
 
 	@field:SerializedName("errors")
-	val errors: Errors? = null
+	//val errors: Errors? = null
+	val errors: ChangePasswordErrors? = null
 )
 
 data class ChangePasswordErrors(
@@ -28,3 +31,5 @@ data class ChangePasswordErrors(
 	@field:SerializedName("new_password")
 	val newPassword: List<String?>? = null
 )
+
+
