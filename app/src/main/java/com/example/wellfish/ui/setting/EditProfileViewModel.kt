@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.wellfish.data.pref.UserModel
 import com.example.wellfish.data.response.EditProfileResponse
 import com.example.wellfish.data.repository.UserRepository
+import com.example.wellfish.data.response.EditProfileUser
 import com.example.wellfish.ui.utils.ResultState
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -34,7 +35,7 @@ class EditProfileViewModel(private val repository: UserRepository) : ViewModel()
 
                 if (result is ResultState.Success) {
                     _currentUser.value?.let {
-                        val updatedProfilePicture = result.data.data?.profilePicture ?: it.profilePicture
+                        val updatedProfilePicture = result.data.data?.user?.profilePicture ?: it.profilePicture
                         val updatedUser = it.copy(name = newName, profilePicture = updatedProfilePicture)
                         _currentUser.value = updatedUser
                     } ?: run {

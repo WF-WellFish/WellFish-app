@@ -2,6 +2,7 @@ package com.example.wellfish.ui.setting
 
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,7 @@ import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.example.wellfish.R
 import com.example.wellfish.data.helper.ViewModelFactory
+import com.example.wellfish.data.response.EditProfileData
 import com.example.wellfish.data.response.EditProfileUser
 import com.example.wellfish.databinding.FragmentEditProfileBinding
 import com.example.wellfish.ui.utils.ResultState
@@ -41,20 +43,27 @@ class EditProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // nampilin nama dan username
+        // Set current user data to the view when the fragment is created
         viewModel.currentUser.observe(viewLifecycleOwner) { user ->
             binding.editTextName.setText(user.name)
             binding.editTextUsername.setText(user.username)
+            Glide.with(this)
+                .load(user.profilePicture)
+                .placeholder(R.drawable.ic_place_holder)
+                .into(binding.ivProfilePicture)
         }
 
+        // Open gallery when the user click the profile picture
         binding.ivProfilePicture.setOnClickListener {
             openGallery()
         }
 
+        // Open gallery when the user click the edit button
         binding.ibEdit.setOnClickListener {
             openGallery()
         }
 
+        // Update the user profile when the user click the save button
         binding.button.setOnClickListener {
             val newName = binding.editTextName.text.toString().trim()
             val profilePicturePart = imageUri?.let { uri ->
@@ -62,22 +71,28 @@ class EditProfileFragment : Fragment() {
                 val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
                 MultipartBody.Part.createFormData("profile_picture", file.name, requestFile)
             }
+
             viewModel.updateProfile(newName, profilePicturePart)
         }
 
-
+        // Observe the response from the server
         viewModel.editProfileResponse.observe(viewLifecycleOwner) { result ->
             when (result) {
                 is ResultState.Success -> {
                     binding.pbLoading.visibility = View.GONE
-                    result.data.data?.let { user ->
-                        updateUI(user)
-                    } ?: showToast("Empty user data received")
+
+                    result.data.data?.user.let { user ->
+                        if (user != null) {
+                            updateUI(user)
+                        }
+                    }
                 }
+
                 is ResultState.Error -> {
                     binding.pbLoading.visibility = View.GONE
                     showToast(result.error)
                 }
+
                 is ResultState.Loading -> {
                     binding.pbLoading.visibility = View.VISIBLE
                 }
@@ -102,12 +117,11 @@ class EditProfileFragment : Fragment() {
 
     private fun updateUI(data: EditProfileUser) {
         binding.editTextName.setText(data.name)
-        data.profilePicture?.let {
-            Glide.with(this)
-                .load(it)
-                .placeholder(R.drawable.ic_place_holder)
-                .into(binding.ivProfilePicture)
-        }
+        Glide.with(this)
+            .load(data.profilePicture)
+            .placeholder(R.drawable.ic_place_holder)
+            .into(binding.ivProfilePicture)
+
         showToast("Profile updated successfully")
     }
 
