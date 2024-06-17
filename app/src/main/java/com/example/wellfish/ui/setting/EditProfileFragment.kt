@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
+import com.example.wellfish.R
 import com.example.wellfish.data.helper.ViewModelFactory
 import com.example.wellfish.data.response.EditProfileUser
 import com.example.wellfish.databinding.FragmentEditProfileBinding
@@ -104,7 +105,7 @@ class EditProfileFragment : Fragment() {
         data.profilePicture?.let {
             Glide.with(this)
                 .load(it)
-                //.placeholder(R.drawable.ic_place_holder)
+                .placeholder(R.drawable.ic_place_holder)
                 .into(binding.ivProfilePicture)
         }
         showToast("Profile updated successfully")

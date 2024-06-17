@@ -12,7 +12,6 @@ import retrofit2.http.FormUrlEncoded
 import retrofit2.http.Header
 import retrofit2.http.Multipart
 import retrofit2.http.POST
-import retrofit2.http.PUT
 import retrofit2.http.Part
 
 interface ApiService {
@@ -43,14 +42,14 @@ interface ApiService {
     @Multipart
     @POST("classification")
     suspend fun classifyFish(
-        @Header("Authorization") token: String,
+        //@Header("Authorization") token: String, //token di ApiConfig
         @Part image: MultipartBody.Part
     ): ClassificationFishResponse
 
     @Multipart
     @POST("profile")
     suspend fun updateProfile(
-        @Header("Authorization") token: String,
+        //@Header("Authorization") token: String, //token di ApiConfig
         @Part("name") name: RequestBody,
         @Part("_method") method: RequestBody,
         @Part profilePicture: MultipartBody.Part?

@@ -122,8 +122,9 @@ class UserRepository private constructor(
     fun classifyFish(image: MultipartBody.Part): LiveData<ResultState<ClassificationFishResponse>> = liveData {
         emit(ResultState.Loading)
         try {
-            val token = userPreference.getSession().first().token
-            val response = apiService.classifyFish("Bearer $token", image)
+            //val token = userPreference.getSession().first().token
+            //val response = apiService.classifyFish("Bearer $token", image)
+            val response = apiService.classifyFish( image) //baru
             emit(ResultState.Success(response))
         } catch (e: HttpException) {
             val error = e.response()?.errorBody()?.string()
@@ -148,13 +149,14 @@ class UserRepository private constructor(
     fun updateProfile(name: String, profilePicture: MultipartBody.Part?): LiveData<ResultState<EditProfileResponse>> = liveData {
         emit(ResultState.Loading)
         try {
-            val token = "Bearer ${userPreference.getSession().first().token}"
+            //val token = "Bearer ${userPreference.getSession().first().token}"
             val nameRequestBody = name.toRequestBody("text/plain".toMediaTypeOrNull())
             val methodRequestBody = "PUT".toRequestBody("text/plain".toMediaTypeOrNull())
 
             Log.d("UserRepository", "Updating profile with name: $name and profilePicture: $profilePicture")
 
-            val response = apiService.updateProfile(token, nameRequestBody, methodRequestBody, profilePicture)
+            //val response = apiService.updateProfile(token, nameRequestBody, methodRequestBody, profilePicture)
+            val response = apiService.updateProfile(nameRequestBody, methodRequestBody, profilePicture)
 
             if (response.isSuccessful) {
                 response.body()?.let {
