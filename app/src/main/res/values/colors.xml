@@ -5,6 +5,7 @@
     <color name="colorPrimary">#60A6A6</color>
     <color name="dark_teal">#028391</color>
     <color name="grey">#999999</color>
+    <color name="bounding_box_color">#FF9800</color>
 
 
     <color name="cyan">#60A6A6</color>
