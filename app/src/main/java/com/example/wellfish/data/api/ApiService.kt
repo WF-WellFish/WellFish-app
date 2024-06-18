@@ -4,13 +4,14 @@ import com.example.wellfish.data.response.ChangePasswordResponse
 import com.example.wellfish.data.response.ClassificationFishResponse
 import com.example.wellfish.data.response.EditProfileResponse
 import com.example.wellfish.data.response.LoginResponse
+import com.example.wellfish.data.response.LogoutResponse
 import com.example.wellfish.data.response.RegisterResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Response
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
-import retrofit2.http.Header
+import retrofit2.http.GET
 import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.Part
@@ -32,12 +33,8 @@ interface ApiService {
     ): LoginResponse
 
     //new2/3
-    /*
     @GET("logout")
-    suspend fun logout(
-        @Header("Authorization") token: String
-    ) : LogoutResponse
-    */
+    suspend fun logout() : LogoutResponse
 
     //new 1/
     @Multipart

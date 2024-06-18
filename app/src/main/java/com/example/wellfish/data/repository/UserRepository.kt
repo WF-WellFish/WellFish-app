@@ -15,6 +15,7 @@ import com.example.wellfish.data.response.EditProfileErrorResponse
 import com.example.wellfish.data.response.EditProfileResponse
 import com.example.wellfish.data.response.ErrorResponse
 import com.example.wellfish.data.response.LoginResponse
+import com.example.wellfish.data.response.LogoutResponse
 //import com.example.wellfish.data.response.LogoutResponse
 import com.example.wellfish.data.response.RegisterResponse
 import com.example.wellfish.ui.utils.ResultState
@@ -85,32 +86,22 @@ class UserRepository private constructor(
     }
 
     //new3/3
-    /*
     fun logout(): LiveData<ResultState<LogoutResponse>> = liveData {
         emit(ResultState.Loading)
-        val session = userPreference.getSession().first()
-        val token = session.token
-
         try {
-            val response = apiService.logout("Bearer $token")
+            val response = apiService.logout()
             if (response.status == "success") {
                 userPreference.logout()
                 emit(ResultState.Success(response))
+                Log.d("UserRepository", "Logout success")
             } else {
-                if (response.message == "Unauthenticated.") {
-                    userPreference.logout()
-                }
                 emit(ResultState.Error(response.message ?: "Unknown error"))
+                Log.d("UserRepository", "Logout failed with message: ${response.message}")
             }
         } catch (e: HttpException) {
             val error = e.response()?.errorBody()?.string()
             if (error != null) {
-                try {
-                    val errorResponse = Gson().fromJson(error, ErrorResponse::class.java)
-                    emit(ResultState.Error(errorResponse.message))
-                } catch (e: Exception) {
-                    emit(ResultState.Error("Error parsing error response"))
-                }
+                emit(ResultState.Error("Error parsing error response"))
             } else {
                 emit(ResultState.Error("Unknown error"))
             }
@@ -120,7 +111,6 @@ class UserRepository private constructor(
             emit(ResultState.Error("Unknown error"))
         }
     }
-    */
 
     fun classifyFish(image: MultipartBody.Part): LiveData<ResultState<ClassificationFishResponse>> = liveData {
         emit(ResultState.Loading)
@@ -242,9 +232,9 @@ class UserRepository private constructor(
     }
 
     //new done
-    suspend fun logout(){
-        userPreference.logout()
-    }
+    //suspend fun logout(){
+    //    userPreference.logout()
+    //}
 
     companion object {
         @Volatile
