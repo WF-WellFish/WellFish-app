@@ -14,7 +14,6 @@ import com.bumptech.glide.Glide
 import com.example.wellfish.R
 import com.example.wellfish.data.helper.ViewModelFactory
 import com.example.wellfish.data.pref.UserModel
-import com.example.wellfish.data.response.EditProfileData
 import com.example.wellfish.data.response.EditProfileUser
 import com.example.wellfish.databinding.FragmentEditProfileBinding
 import com.example.wellfish.ui.utils.ResultState
