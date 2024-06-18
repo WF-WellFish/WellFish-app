@@ -73,11 +73,13 @@ class FishFragment : Fragment(R.layout.fragment_fish) {
         viewModel.classificationResult.observe(viewLifecycleOwner) { result ->
             when (result) {
                 is ResultState.Loading -> showLoading(true)
+
                 is ResultState.Success -> {
                     showLoading(false)
                     updateUI(result.data)
                     binding.btnSubmit.isEnabled = false
                 }
+
                 is ResultState.Error -> {
                     showLoading(false)
                     showToast(result.error)
@@ -106,17 +108,13 @@ class FishFragment : Fragment(R.layout.fragment_fish) {
             val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
             val body = MultipartBody.Part.createFormData("image", file.name, requestFile)
 
-            Log.d("FishFragment", "classifyImage: file name = ${file.name}, file size = ${file.length()}")
-
             viewModel.classifyFish(body)
         } catch (e: Exception) {
             showToast("Failed to convert URI to File")
-            Log.e("FishFragment", "Failed to convert URI to File", e)
         }
     }
 
     private fun updateUI(data: ClassificationFishResponse) {
-        Log.d("FishFragment", "API response: $data")
         data.data?.let { fishData ->
             binding.tvName.apply {
                 visibility = View.VISIBLE
@@ -128,18 +126,11 @@ class FishFragment : Fragment(R.layout.fragment_fish) {
             }
             binding.tvDescription.apply {
                 visibility = View.VISIBLE
-                text = "Description: ${fishData.description}"
+                text = "${fishData.description}"
             }
             binding.tvFood.apply {
                 visibility = View.VISIBLE
                 text = "Food: ${fishData.food}"
-            }
-            binding.ivResultImage.apply {
-                visibility = View.VISIBLE
-                Glide.with(this@FishFragment)
-                    .load(fishData.picture)
-                    .placeholder(R.drawable.ic_place_holder)
-                    .into(this)
             }
         }
     }
@@ -152,7 +143,6 @@ class FishFragment : Fragment(R.layout.fragment_fish) {
             binding.tvType.visibility = View.GONE
             binding.tvDescription.visibility = View.GONE
             binding.tvFood.visibility = View.GONE
-            binding.ivResultImage.visibility = View.GONE
         }
     }
 

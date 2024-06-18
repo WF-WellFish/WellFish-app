@@ -5,7 +5,6 @@ import com.google.gson.annotations.SerializedName
 data class ClassificationFishResponse(
 
 	@field:SerializedName("data")
-	//val data: Data? = null,
 	val data: ClassificationFishData? = null,
 
 	@field:SerializedName("message")
@@ -28,7 +27,4 @@ data class ClassificationFishData(
 
 	@field:SerializedName("food")
 	val food: String? = null,
-
-	@field:SerializedName("picture")
-	val picture: String? = null
 )
