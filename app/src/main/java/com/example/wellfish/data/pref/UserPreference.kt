@@ -40,6 +40,7 @@ class UserPreference private constructor(private val dataStore: DataStore<Prefer
         }
     }
 
+
     //new done
     suspend fun logout() {
         dataStore.edit { preferences ->

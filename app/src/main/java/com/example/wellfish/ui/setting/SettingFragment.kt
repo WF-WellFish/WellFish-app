@@ -2,60 +2,72 @@ package com.example.wellfish.ui.setting
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import com.example.wellfish.R
 import com.example.wellfish.data.helper.ViewModelFactory
+import com.example.wellfish.databinding.FragmentSettingBinding
+import com.example.wellfish.ui.utils.ResultState
 import com.example.wellfish.ui.welcome.WelcomeActivity
-import kotlinx.coroutines.launch
 
 class SettingFragment : Fragment() {
-    private lateinit var editProfileLayout: ConstraintLayout
-    private lateinit var changePasswordLayout: ConstraintLayout
-    private lateinit var logoutLayout: ConstraintLayout
 
     private val viewModel: SettingFragmentViewModel by viewModels {
         ViewModelFactory.getInstance(requireContext())
     }
+    private var _binding: FragmentSettingBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.fragment_setting, container, false)
+    ): View {
+        _binding = FragmentSettingBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
-        editProfileLayout = view.findViewById(R.id.rl_editProfile)
-        changePasswordLayout = view.findViewById(R.id.rl_password)
-        logoutLayout = view.findViewById(R.id.rl_logout)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-
-        editProfileLayout.setOnClickListener {
+        binding.rlEditProfile.setOnClickListener {
             parentFragmentManager.beginTransaction()
                 .replace(R.id.frame_layout, EditProfileFragment())
                 .addToBackStack(null)
                 .commit()
         }
 
-        changePasswordLayout.setOnClickListener {
+        binding.rlPassword.setOnClickListener {
             parentFragmentManager.beginTransaction()
                 .replace(R.id.frame_layout, ChangePasswordFragment())
                 .addToBackStack(null)
                 .commit()
         }
 
-        logoutLayout.setOnClickListener {
-            lifecycleScope.launch {
-                viewModel.logout()
-                navigateToWelcomeScreen()
-            }
+        binding.rlLogout.setOnClickListener {
+            viewModel.logout()
         }
 
-        return view
+        observeLogout()
+    }
+
+    private fun observeLogout() {
+        viewModel.logoutResult.observe(viewLifecycleOwner) { result ->
+            when (result) {
+                is ResultState.Loading -> {
+                    binding.pbLoading.visibility = View.VISIBLE
+                }
+                is ResultState.Success -> {
+                    binding.pbLoading.visibility = View.GONE
+                    navigateToWelcomeScreen()
+                }
+                is ResultState.Error -> {
+                    binding.pbLoading.visibility = View.GONE
+                }
+            }
+        }
     }
 
     private fun navigateToWelcomeScreen() {
@@ -63,5 +75,10 @@ class SettingFragment : Fragment() {
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
         startActivity(intent)
         requireActivity().finish()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
