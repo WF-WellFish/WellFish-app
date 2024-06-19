@@ -27,5 +27,8 @@ data class HistoryDetailData(
 	val type: String? = null,
 
 	@field:SerializedName("food")
-	val food: String? = null
+	val food: String? = null,
+
+	@field:SerializedName("picture")
+	val picture: String? = null
 )

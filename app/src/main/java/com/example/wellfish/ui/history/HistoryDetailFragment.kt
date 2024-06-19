@@ -6,11 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.example.wellfish.R
 import com.example.wellfish.data.helper.ViewModelFactory
 import com.example.wellfish.data.response.ClassificationHistoryDetailResponse
@@ -23,6 +25,7 @@ class HistoryDetailFragment : Fragment() {
     private lateinit var tvType: TextView
     private lateinit var tvFood: TextView
     private lateinit var tvDescription: TextView
+    private lateinit var ivPreview: ImageView
     private lateinit var pbLoading: ProgressBar
 
     override fun onCreateView(
@@ -34,6 +37,7 @@ class HistoryDetailFragment : Fragment() {
         tvType = view.findViewById(R.id.tvType)
         tvFood = view.findViewById(R.id.tvFood)
         tvDescription = view.findViewById(R.id.tvDescription)
+        ivPreview = view.findViewById(R.id.ivPreview)
         pbLoading = view.findViewById(R.id.pbLoading)
         return view
     }
@@ -76,6 +80,14 @@ class HistoryDetailFragment : Fragment() {
         tvType.text = data.data?.type
         tvFood.text = data.data?.food
         tvDescription.text = data.data?.description
+
+        val pictureUrl = data.data?.picture
+        if (!pictureUrl.isNullOrBlank()) {
+            Glide.with(this)
+                .load((pictureUrl))
+                .placeholder(R.drawable.ic_place_holder)
+                .into(ivPreview)
+        }
     }
 
 }
