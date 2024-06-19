@@ -11,6 +11,8 @@ import com.example.wellfish.data.response.ChangePasswordErrors
 import com.example.wellfish.data.response.ChangePasswordResponse
 import com.example.wellfish.data.response.ClassificationFishErrorResponse
 import com.example.wellfish.data.response.ClassificationFishResponse
+import com.example.wellfish.data.response.ClassificationHistoryDetailResponse
+import com.example.wellfish.data.response.ClassificationHistoryResponse
 import com.example.wellfish.data.response.EditProfileErrorResponse
 import com.example.wellfish.data.response.EditProfileResponse
 import com.example.wellfish.data.response.ErrorResponse
@@ -85,7 +87,6 @@ class UserRepository private constructor(
         }
     }
 
-    //new3/3
     fun logout(): LiveData<ResultState<LogoutResponse>> = liveData {
         emit(ResultState.Loading)
         try {
@@ -210,6 +211,54 @@ class UserRepository private constructor(
                         ).joinToString("; ")
                     } ?: errorResponse.message ?: "Unknown error"
                     emit(ResultState.Error(errorMessage))
+                } catch (e: Exception) {
+                    emit(ResultState.Error("Error parsing error response"))
+                }
+            } else {
+                emit(ResultState.Error("Unknown error"))
+            }
+        } catch (e: IOException) {
+            emit(ResultState.Error("Network error, please try again"))
+        } catch (e: Exception) {
+            emit(ResultState.Error("Unknown error"))
+        }
+    }
+
+    fun getClassificationHistory(): LiveData<ResultState<ClassificationHistoryResponse>> = liveData {
+        emit(ResultState.Loading)
+        try {
+            val response = apiService.classificationHistory()
+            emit(ResultState.Success(response))
+        } catch (e: HttpException) {
+            val error = e.response()?.errorBody()?.string()
+            if (error != null) {
+                try {
+                    val errorResponse = Gson().fromJson(error, ClassificationHistoryResponse::class.java)
+                    emit(ResultState.Error(errorResponse.message ?: "Unknown error"))
+                } catch (e: Exception) {
+                    emit(ResultState.Error("Error parsing error response"))
+                }
+            } else {
+                emit(ResultState.Error("Unknown error"))
+            }
+        } catch (e: IOException) {
+            emit(ResultState.Error("Network error, please try again"))
+        } catch (e: Exception) {
+            emit(ResultState.Error("Unknown error"))
+        }
+    }
+
+    fun getClassificationHistoryDetail(id: String): LiveData<ResultState<ClassificationHistoryDetailResponse>> = liveData {
+        emit(ResultState.Loading)
+        try {
+            val response = apiService.classificationHistoryDetail(id)
+            emit(ResultState.Success(response))
+        } catch (e: HttpException) {
+            val error = e.response()?.errorBody()?.string()
+            if (error != null) {
+                try {
+                    val errorResponse = Gson().fromJson(error, ClassificationHistoryDetailResponse::class.java)
+                    emit(ResultState.Error(errorResponse.message ?: "Unknown error"))
                 } catch (e: Exception) {
                     emit(ResultState.Error("Error parsing error response"))
                 }

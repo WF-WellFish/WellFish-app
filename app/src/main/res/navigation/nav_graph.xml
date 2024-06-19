@@ -15,4 +15,23 @@
         android:id="@+id/settingsFragment"
         android:name="com.example.wellfish.ui.setting.SettingFragment"
         tools:layout="@layout/fragment_setting" />
+
+    <fragment
+        android:id="@+id/historyFragment"
+        android:name="com.example.wellfish.ui.history.HistoryFragment"
+        tools:layout="@layout/fragment_history">
+        <action
+            android:id="@+id/action_historyFragment_to_historyDetailFragment"
+            app:destination="@id/historyDetailFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/historyDetailFragment"
+        android:name="com.example.wellfish.ui.history.HistoryDetailFragment"
+        tools:layout="@layout/fragment_history_detail">
+        <argument
+            android:name="history_id"
+            app:argType="string" />
+    </fragment>
+
 </navigation>

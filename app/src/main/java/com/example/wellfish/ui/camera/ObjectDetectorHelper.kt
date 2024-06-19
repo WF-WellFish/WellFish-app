@@ -18,11 +18,12 @@ import org.tensorflow.lite.task.core.BaseOptions
 import org.tensorflow.lite.task.gms.vision.TfLiteVision
 import org.tensorflow.lite.task.gms.vision.detector.Detection
 import org.tensorflow.lite.task.gms.vision.detector.ObjectDetector
+import org.tensorflow.lite.support.image.ops.ResizeOp
 
 class ObjectDetectorHelper(
-    var threshold: Float = 0.1f,
-    var maxResults: Int = 3,
-    val modelName: String = "1.tflite", //nama asset ML
+    var threshold: Float = 0.5f,
+    var maxResults: Int = 5,
+    val modelName: String = "detect.tflite", //nama asset ML
     val context: Context,
     val detectorListener: DetectorListener?
 ) {
@@ -85,7 +86,7 @@ class ObjectDetectorHelper(
         //mengatur orientasi gambar supaya sesuai dengan model
         val imageProcessor = ImageProcessor.Builder()
             .add(Rot90Op(-image.imageInfo.rotationDegrees / 90))
-            //.add(NormalizeOp(0.0f, 1.0f))
+            .add(ResizeOp(640, 640, ResizeOp.ResizeMethod.BILINEAR))
             .build()
 
         val tensorImage = imageProcessor.process(TensorImage.fromBitmap(toBitmap(image)))

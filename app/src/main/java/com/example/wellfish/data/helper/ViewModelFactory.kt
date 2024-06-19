@@ -1,12 +1,13 @@
 package com.example.wellfish.data.helper
 
-import android.app.Application
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.wellfish.data.di.Injection
 import com.example.wellfish.data.repository.UserRepository
 import com.example.wellfish.ui.camera.ClassificationViewModel
+import com.example.wellfish.ui.history.HistoryDetailViewModel
+import com.example.wellfish.ui.history.HistoryViewModel
 import com.example.wellfish.ui.login.LoginViewModel
 import com.example.wellfish.ui.register.RegisterViewModel
 import com.example.wellfish.ui.setting.ChangePasswordViewModel
@@ -36,6 +37,11 @@ class ViewModelFactory(private val repository: UserRepository) : ViewModelProvid
             modelClass.isAssignableFrom(ChangePasswordViewModel::class.java) -> {
                 ChangePasswordViewModel(repository) as T
             }
+            modelClass.isAssignableFrom(HistoryViewModel::class.java) -> {
+                HistoryViewModel(repository) as T
+            }
+            modelClass.isAssignableFrom(HistoryDetailViewModel::class.java) ->
+                HistoryDetailViewModel(repository) as T
             else -> throw IllegalArgumentException("Unknown ViewModel Class: " + modelClass.name)
         }
     }
