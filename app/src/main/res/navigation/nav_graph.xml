@@ -8,13 +8,14 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.example.wellfish.ui.home.HomeFragment"
-        android:label="Home">
-    </fragment>
+        android:label="Home"
+        tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/settingsFragment"
-        android:name="com.example.wellfish.ui.setting.SettingFragment"
-        tools:layout="@layout/fragment_setting" />
+        android:id="@+id/fishFragment"
+        android:name="com.example.wellfish.ui.camera.FishFragment"
+        android:label="Fish"
+        tools:layout="@layout/fragment_fish" />
 
     <fragment
         android:id="@+id/historyFragment"
@@ -32,6 +33,42 @@
         <argument
             android:name="history_id"
             app:argType="string" />
+        <action
+            android:id="@+id/action_historyDetailFragment_to_historyFragment"
+            app:destination="@id/historyFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/settingFragment"
+        android:name="com.example.wellfish.ui.setting.SettingFragment"
+        android:label="Settings"
+        tools:layout="@layout/fragment_setting">
+        <action
+            android:id="@+id/action_settingFragment_to_editProfileFragment"
+            app:destination="@id/editProfileFragment" />
+        <action
+            android:id="@+id/action_settingFragment_to_changePasswordFragment"
+            app:destination="@id/changePasswordFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/editProfileFragment"
+        android:name="com.example.wellfish.ui.setting.EditProfileFragment"
+        android:label="Edit Profile"
+        tools:layout="@layout/fragment_edit_profile">
+        <action
+            android:id="@+id/action_editProfileFragment_to_settingFragment"
+            app:destination="@+id/settingFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/changePasswordFragment"
+        android:name="com.example.wellfish.ui.setting.ChangePasswordFragment"
+        android:label="Change Password"
+        tools:layout="@layout/fragment_change_password">
+        <action
+            android:id="@+id/action_changePasswordFragment_to_settingFragmet"
+            app:destination="@+id/settingFragment" />
     </fragment>
 
 </navigation>

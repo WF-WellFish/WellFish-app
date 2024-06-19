@@ -84,10 +84,10 @@ class HistoryFragment : Fragment(), HistoryAdapter.OnItemClickListener {
         }
     }
 
-    //override fun onItemClick(historyId: String) {
-    //    val action = HistoryFragmentDirections.actionHistoryFragmentToHistoryDetailFragment(historyId)
-    //    findNavController().navigate(action)
-    //}
+    override fun onItemClick(historyId: String) {
+        val action = HistoryFragmentDirections.actionHistoryFragmentToHistoryDetailFragment(historyId)
+        findNavController().navigate(action)
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()

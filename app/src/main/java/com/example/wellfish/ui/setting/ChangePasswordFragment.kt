@@ -4,9 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import com.example.wellfish.R
 import com.example.wellfish.data.helper.ViewModelFactory
 import com.example.wellfish.databinding.FragmentChangePasswordBinding
 import com.example.wellfish.ui.utils.ResultState
@@ -30,8 +33,8 @@ class ChangePasswordFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.btnBack.setOnClickListener {
-            requireActivity().supportFragmentManager.popBackStack()
+        view.findViewById<ImageButton>(R.id.btn_back).setOnClickListener {
+            findNavController().navigateUp()
         }
 
         binding.button.setOnClickListener {

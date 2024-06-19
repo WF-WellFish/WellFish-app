@@ -10,20 +10,20 @@ import com.example.wellfish.R
 import com.google.android.gms.tflite.client.TfLiteInitializationOptions
 import com.google.android.gms.tflite.gpu.support.TfLiteGpu
 import org.tensorflow.lite.gpu.CompatibilityList
-//import org.tensorflow.lite.support.common.ops.NormalizeOp
 import org.tensorflow.lite.support.image.ImageProcessor
 import org.tensorflow.lite.support.image.TensorImage
+import org.tensorflow.lite.support.image.ops.ResizeOp
 import org.tensorflow.lite.support.image.ops.Rot90Op
+import org.tensorflow.lite.support.tensorbuffer.TensorBuffer
 import org.tensorflow.lite.task.core.BaseOptions
 import org.tensorflow.lite.task.gms.vision.TfLiteVision
 import org.tensorflow.lite.task.gms.vision.detector.Detection
 import org.tensorflow.lite.task.gms.vision.detector.ObjectDetector
-import org.tensorflow.lite.support.image.ops.ResizeOp
 
 class ObjectDetectorHelper(
     var threshold: Float = 0.5f,
-    var maxResults: Int = 5,
-    val modelName: String = "detect.tflite", //nama asset ML
+    var maxResults: Int = 3,
+    val modelFile: String = "detect.tflite", //nama asset ML
     val context: Context,
     val detectorListener: DetectorListener?
 ) {
@@ -61,7 +61,7 @@ class ObjectDetectorHelper(
         try {
             objectDetector = ObjectDetector.createFromFileAndOptions(
                 context,
-                modelName,
+                modelFile,
                 optionsBuilder.build()
             )
         } catch (e: IllegalStateException) {
@@ -94,12 +94,38 @@ class ObjectDetectorHelper(
         var inferenceTime = SystemClock.uptimeMillis()
         val results = objectDetector?.detect(tensorImage)
         inferenceTime = SystemClock.uptimeMillis() - inferenceTime
+
+        val processedResults = postProcessResults(results ?: listOf())
+
         detectorListener?.onResults(
-            results,
+            processedResults.toMutableList(),
             inferenceTime,
             tensorImage.height,
             tensorImage.width
         )
+    }
+
+
+    private fun postProcessResults(detectionResults: List<Detection>): List<Detection> {
+        // Implementasikan logika post-processing di sini
+    //    val processedResults = detectionResults.map { detection ->
+    //        val outputTensor0 = detection.output[0]
+    //        // Menambahkan dimensi pada tensor output jika hanya memiliki 2 dimensi
+    //        if (outputTensor0.shape().size == 2) {
+    //            val expandedOutput0 = expandDims(outputTensor0)
+    //            detection.output[0] = expandedOutput0
+    //         }
+    //        detection
+    //    }
+        return detectionResults
+    }
+
+    private fun expandDims(tensor: TensorBuffer): TensorBuffer {
+        val shape = tensor.shape
+        val newShape = shape + intArrayOf(1)
+        val expandedTensor = TensorBuffer.createDynamic(tensor.dataType)
+        expandedTensor.loadArray(tensor.floatArray, newShape)
+        return expandedTensor
     }
 
     private fun toBitmap(image: ImageProxy): Bitmap {

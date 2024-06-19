@@ -24,10 +24,8 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
-        //return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -37,16 +35,19 @@ class HomeFragment : Fragment() {
 
     private fun fetchAndDisplayUserName() {
         val userPreference = UserPreference.getInstance(requireContext().dataStore)
-        lifecycleScope.launch {
+
+        viewLifecycleOwner.lifecycleScope.launch {
             userPreference.getSession().collect { user ->
                 val greeting = getString(R.string.greeting_home) + " " + user.name
-                binding.tvNameHome.text = greeting
+                binding?.tvNameHome?.text = greeting
                 // show profile picture from uri
-                if(user.profilePicture != "") {
-                    Glide.with(this@HomeFragment)
-                        .load(user.profilePicture)
-                        .placeholder(R.drawable.ic_place_holder)
-                        .into(binding.ivProfilePicture)
+                user.profilePicture?.let { profilePicture ->
+                    binding?.ivProfilePicture?.let { imageView ->
+                        Glide.with(this@HomeFragment)
+                            .load(profilePicture)
+                            .placeholder(R.drawable.ic_place_holder)
+                            .into(imageView)
+                    }
                 }
             }
         }

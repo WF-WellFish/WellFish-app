@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.wellfish.R
 import com.example.wellfish.data.helper.ViewModelFactory
 import com.example.wellfish.databinding.FragmentSettingBinding
@@ -33,17 +34,11 @@ class SettingFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.rlEditProfile.setOnClickListener {
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.frame_layout, EditProfileFragment())
-                .addToBackStack(null)
-                .commit()
+            findNavController().navigate(R.id.action_settingFragment_to_editProfileFragment)
         }
 
         binding.rlPassword.setOnClickListener {
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.frame_layout, ChangePasswordFragment())
-                .addToBackStack(null)
-                .commit()
+            findNavController().navigate(R.id.action_settingFragment_to_changePasswordFragment)
         }
 
         binding.rlLogout.setOnClickListener {

@@ -14,6 +14,9 @@ import androidx.camera.core.CameraSelector
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupWithNavController
 import com.example.wellfish.R
 //import com.example.wellfish.data.helper.ViewModelFactory
 import com.example.wellfish.data.pref.UserPreference
@@ -37,6 +40,7 @@ class MainActivity : AppCompatActivity() {
     private var isGuest: Boolean = false
     private var cameraSelector: CameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
     private lateinit var objectDetectorHelper: ObjectDetectorHelper
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,18 +55,36 @@ class MainActivity : AppCompatActivity() {
 
         isGuest = intent.getBooleanExtra("IS_GUEST", false)
 
-        replaceFragment(HomeFragment())
-        binding.bottomNavigation.setOnItemSelectedListener {
-            when(it.itemId){
-                R.id.tab_home -> replaceFragment(HomeFragment())
-                R.id.tab_fish -> replaceFragment(FishFragment())
-                R.id.tab_camera -> startCameraX() //replaceFragment(CameraFragment())
-                R.id.tab_history -> replaceFragment(HistoryFragment())
-                R.id.tab_setting -> replaceFragment(SettingFragment())
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        navController = navHostFragment.navController
 
-                else -> { }
+        binding.bottomNavigation.setupWithNavController(navController)
+
+        binding.bottomNavigation.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.tab_home -> {
+                    navController.navigate(R.id.homeFragment)
+                    true
+                }
+                R.id.tab_fish -> {
+                    navController.navigate(R.id.fishFragment)
+                    true
+                }
+                R.id.tab_camera -> {
+                    // Handle camera start separately if needed
+                    startCameraFragment()
+                    true
+                }
+                R.id.tab_history -> {
+                    navController.navigate(R.id.historyFragment)
+                    true
+                }
+                R.id.tab_setting -> {
+                    navController.navigate(R.id.settingFragment)
+                    true
+                }
+                else -> false
             }
-            true
         }
     }
 
@@ -97,12 +119,6 @@ class MainActivity : AppCompatActivity() {
         return session.isLogin
     }
 
-    private fun replaceFragment(fragment: Fragment) {
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.frame_layout, fragment)
-            .commit()
-    }
-
     private fun allPermissionsGranted() =
         ContextCompat.checkSelfPermission(
             this,
@@ -124,8 +140,11 @@ class MainActivity : AppCompatActivity() {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
-    private fun startCameraX() {
-        replaceFragment(CameraFragment())
+    private fun startCameraFragment() {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.nav_host_fragment, CameraFragment())
+            .addToBackStack(null)
+            .commit()
     }
 
     companion object {

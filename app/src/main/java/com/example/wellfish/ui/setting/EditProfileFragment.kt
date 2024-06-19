@@ -2,14 +2,15 @@ package com.example.wellfish.ui.setting
 
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.wellfish.R
 import com.example.wellfish.data.helper.ViewModelFactory
@@ -116,8 +117,8 @@ class EditProfileFragment : Fragment() {
             }
         }
 
-        binding.btnBack.setOnClickListener{
-            requireActivity().supportFragmentManager.popBackStack()
+        view.findViewById<ImageButton>(R.id.btn_back).setOnClickListener {
+            findNavController().navigateUp()
         }
     }
 

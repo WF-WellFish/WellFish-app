@@ -13,7 +13,7 @@
         android:text="@string/settings"
         android:textStyle="bold"
         android:textSize="24sp"
-        android:textColor="@color/black"
+        android:textColor="@color/dark_grey"
         android:layout_marginStart="30dp"
         android:layout_marginTop="30dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,7 +22,7 @@
     <ImageView
         android:id="@+id/iv_border_general"
         android:layout_width="0dp"
-        android:layout_height="45dp"
+        android:layout_height="35dp"
         android:layout_marginStart="30dp"
         android:layout_marginTop="80dp"
         android:layout_marginEnd="30dp"
@@ -38,9 +38,9 @@
         android:layout_height="wrap_content"
         android:text="@string/general"
         android:layout_marginStart="16dp"
-        android:textSize="20sp"
+        android:textSize="19sp"
         android:textStyle="bold"
-        android:textColor="@color/black"
+        android:textColor="@color/dark_grey"
         app:layout_constraintBottom_toBottomOf="@id/iv_border_general"
         app:layout_constraintStart_toStartOf="@id/iv_border_general"
         app:layout_constraintTop_toTopOf="@id/iv_border_general" />
@@ -61,16 +61,16 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
-            android:layout_marginTop="15dp"
-            android:padding="16dp"
+            android:layout_marginTop="5dp"
+            android:padding="14dp"
             android:background="?attr/selectableItemBackground"
             android:clickable="true"
             android:focusable="true">
 
             <ImageView
                 android:id="@+id/icon_editProfile"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
                 android:src="@drawable/ic_baseline_person_24"
                 android:contentDescription="@string/icon_people"
                 app:layout_constraintStart_toStartOf="parent"
@@ -82,7 +82,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="@string/edit_profile_setting"
-                android:textSize="19sp"
+                android:textSize="17sp"
                 android:textStyle="bold"
                 android:textColor="@color/dark_grey"
                 android:layout_marginStart="16dp"
@@ -116,15 +116,15 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
-            android:padding="16dp"
+            android:padding="14dp"
             android:background="?attr/selectableItemBackground"
             android:clickable="true"
             android:focusable="true">
 
             <ImageView
                 android:id="@+id/icon_password"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
                 android:src="@drawable/ic_baseline_key_24"
                 android:contentDescription="@string/change_password"
                 app:layout_constraintStart_toStartOf="parent"
@@ -136,7 +136,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="@string/change_password"
-                android:textSize="19sp"
+                android:textSize="17sp"
                 android:textStyle="bold"
                 android:textColor="@color/dark_grey"
                 android:layout_marginStart="16dp"
@@ -170,15 +170,15 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
-            android:padding="16dp"
+            android:padding="14dp"
             android:background="?attr/selectableItemBackground"
             android:clickable="true"
             android:focusable="true">
 
             <ImageView
                 android:id="@+id/icon_logout"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
                 android:src="@drawable/ic_baseline_logout_24"
                 android:contentDescription="@string/logout"
                 app:layout_constraintStart_toStartOf="parent"
@@ -190,7 +190,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="@string/logout"
-                android:textSize="19sp"
+                android:textSize="17sp"
                 android:textStyle="bold"
                 android:textColor="@color/dark_grey"
                 android:layout_marginStart="16dp"
@@ -218,153 +218,6 @@
             android:src="@drawable/line_setting"
             android:contentDescription="@string/line" />
 
-    </LinearLayout>
-
-    <ImageView
-        android:id="@+id/iv_border_general2"
-        android:layout_width="0dp"
-        android:layout_height="45dp"
-        android:layout_marginTop="45dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
-        android:background="@drawable/border_edit_profile"
-        android:contentDescription="@string/border"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ll_general_item" />
-
-    <TextView
-        android:id="@+id/tv_preferences"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/preferences"
-        android:layout_marginStart="16dp"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="@+id/iv_border_general2"
-        app:layout_constraintStart_toStartOf="@+id/iv_border_general2"
-        app:layout_constraintTop_toTopOf="@+id/iv_border_general2" />
-
-    <LinearLayout
-        android:id="@+id/ll_preference_item"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_margin="8dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_preferences">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/rl_language"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginTop="15dp"
-            android:padding="16dp"
-            android:background="?attr/selectableItemBackground"
-            android:clickable="true"
-            android:focusable="true">
-
-            <ImageView
-                android:id="@+id/icon_language"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
-                android:src="@drawable/ic_baseline_language_24"
-                android:contentDescription="@string/language"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
-
-            <TextView
-                android:id="@+id/tv_language"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="@string/language"
-                android:textSize="19sp"
-                android:textStyle="bold"
-                android:textColor="@color/dark_grey"
-                android:layout_marginStart="16dp"
-                app:layout_constraintStart_toEndOf="@id/icon_language"
-                app:layout_constraintEnd_toStartOf="@id/arrow_language"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintHorizontal_bias="0"/>
-
-            <ImageView
-                android:id="@+id/arrow_language"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/ic_baseline_keyboard_arrow_right_24"
-                android:contentDescription="@string/arrow"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <ImageView
-            android:id="@+id/iv_line4"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:src="@drawable/line_setting"
-            android:contentDescription="@string/line" />
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/rl_darkMode"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginTop="15dp"
-            android:padding="16dp"
-            android:background="?attr/selectableItemBackground"
-            android:clickable="true"
-            android:focusable="true">
-
-            <ImageView
-                android:id="@+id/icon_darkMode"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
-                android:src="@drawable/ic_baseline_bedtime_24"
-                android:contentDescription="@string/dark_mode"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
-
-            <TextView
-                android:id="@+id/tv_darkMode"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="@string/dark_mode"
-                android:textSize="19sp"
-                android:textStyle="bold"
-                android:textColor="@color/dark_grey"
-                android:layout_marginStart="16dp"
-                app:layout_constraintStart_toEndOf="@id/icon_darkMode"
-                app:layout_constraintEnd_toStartOf="@id/switch_darkMode"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintHorizontal_bias="0"/>
-
-            <androidx.appcompat.widget.SwitchCompat
-                android:id="@+id/switch_darkMode"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <ImageView
-            android:id="@+id/iv_line5"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:src="@drawable/line_setting"
-            android:contentDescription="@string/line" />
     </LinearLayout>
 
     <ProgressBar

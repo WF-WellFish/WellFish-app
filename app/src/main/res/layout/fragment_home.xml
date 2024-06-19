@@ -26,6 +26,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="40dp"
         android:text="@string/greeting_home"
+        android:textColor="@color/black"
         android:textSize="18sp"
         app:layout_constraintStart_toEndOf="@+id/iv_profilePicture"
         app:layout_constraintTop_toTopOf="parent" />
@@ -36,50 +37,21 @@
         android:layout_height="wrap_content"
         android:text="@string/greeting_home_2"
         android:textSize="20sp"
+        android:textColor="@color/dark_grey"
         android:textStyle="bold"
         android:layout_marginStart="20dp"
         app:layout_constraintStart_toEndOf="@+id/iv_profilePicture"
         app:layout_constraintTop_toBottomOf="@+id/tv_name_home" />
 
-    <com.google.android.material.search.SearchBar
-        android:id="@+id/searchBar"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginHorizontal="16dp"
-        android:hint="@string/searchbar_hint"
-        android:backgroundTint="@color/cyan_fade"
-        android:layout_marginTop="15dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginEnd="28dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_desc_home"
-        app:theme="@style/ThemeOverlay.Material3.Search">
-    </com.google.android.material.search.SearchBar>
-
-    <com.google.android.material.search.SearchView
-        android:id="@+id/searchView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:hint="@string/searchbar_hint"
-        app:layout_anchor="@id/searchBar"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-    </com.google.android.material.search.SearchView>
-
     <ImageView
         android:id="@+id/iv_home"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="70dp"
         android:contentDescription="@string/home_icon"
         android:src="@drawable/home_icon"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -18,12 +18,10 @@ import com.example.wellfish.data.response.EditProfileResponse
 import com.example.wellfish.data.response.ErrorResponse
 import com.example.wellfish.data.response.LoginResponse
 import com.example.wellfish.data.response.LogoutResponse
-//import com.example.wellfish.data.response.LogoutResponse
 import com.example.wellfish.data.response.RegisterResponse
 import com.example.wellfish.ui.utils.ResultState
 import com.google.gson.Gson
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.first
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.toRequestBody
@@ -183,8 +181,6 @@ class UserRepository private constructor(
 
     fun changePassword(oldPassword: String, newPassword: String, newPasswordConfirmation: String): LiveData<ResultState<ChangePasswordResponse>> = liveData {
         emit(ResultState.Loading)
-        val session = userPreference.getSession().first()
-        val token = session.token
         try {
             val response = apiService.changePassword(
                 oldPassword = oldPassword,
@@ -223,6 +219,7 @@ class UserRepository private constructor(
             emit(ResultState.Error("Unknown error"))
         }
     }
+
 
     fun getClassificationHistory(): LiveData<ResultState<ClassificationHistoryResponse>> = liveData {
         emit(ResultState.Loading)
