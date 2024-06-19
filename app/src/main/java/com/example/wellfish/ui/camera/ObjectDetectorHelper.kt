@@ -23,7 +23,7 @@ import org.tensorflow.lite.task.gms.vision.detector.ObjectDetector
 class ObjectDetectorHelper(
     var threshold: Float = 0.5f,
     var maxResults: Int = 3,
-    val modelFile: String = "detect.tflite", //nama asset ML
+    val modelFile: String = "1.tflite", //nama asset ML
     val context: Context,
     val detectorListener: DetectorListener?
 ) {
@@ -86,7 +86,7 @@ class ObjectDetectorHelper(
         //mengatur orientasi gambar supaya sesuai dengan model
         val imageProcessor = ImageProcessor.Builder()
             .add(Rot90Op(-image.imageInfo.rotationDegrees / 90))
-            .add(ResizeOp(640, 640, ResizeOp.ResizeMethod.BILINEAR))
+            .add(ResizeOp(160, 160, ResizeOp.ResizeMethod.BILINEAR))
             .build()
 
         val tensorImage = imageProcessor.process(TensorImage.fromBitmap(toBitmap(image)))

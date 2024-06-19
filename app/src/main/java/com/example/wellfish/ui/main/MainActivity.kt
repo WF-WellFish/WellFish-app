@@ -38,8 +38,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var sharedPreferences: SharedPreferences
     private var isGuest: Boolean = false
-    private var cameraSelector: CameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
-    private lateinit var objectDetectorHelper: ObjectDetectorHelper
+    //private var cameraSelector: CameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
+    //private lateinit var objectDetectorHelper: ObjectDetectorHelper
     private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
