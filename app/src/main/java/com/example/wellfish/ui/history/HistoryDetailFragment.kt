@@ -76,15 +76,15 @@ class HistoryDetailFragment : Fragment() {
     }
 
     private fun displayHistoryDetail(data: ClassificationHistoryDetailResponse) {
-        tvName.text = data.data?.name
-        tvType.text = data.data?.type
-        tvFood.text = data.data?.food
-        tvDescription.text = data.data?.description
+        tvName.text = "Name: ${data.data?.name}"
+        tvType.text = "Type: ${data.data?.type}"
+        tvFood.text = "Food: ${data.data?.food}"
+        tvDescription.text = "Description: ${data.data?.description}"
 
         val pictureUrl = data.data?.picture
         if (!pictureUrl.isNullOrBlank()) {
             Glide.with(this)
-                .load((pictureUrl))
+                .load(pictureUrl)
                 .placeholder(R.drawable.ic_place_holder)
                 .into(ivPreview)
         }
