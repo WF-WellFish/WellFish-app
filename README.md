@@ -16,7 +16,6 @@ WellFish empowers users to make informed choices about the seafood they consume.
 WellFish is designed for fishermen, consumers, and anyone interested in sustainable seafood practices.
 
 
-
 # WellFish Android Application
 
 - Android Studio
@@ -27,11 +26,7 @@ WellFish is designed for fishermen, consumers, and anyone interested in sustaina
 - CameraX
 - TensorFlow Lite
 
-
-
-
-
-## Features
+## Core Features
 
 1.	WellFish – Fish Classification
 -	Fish Identification – Identify the fish's species, type, and recommended food.
@@ -45,14 +40,6 @@ WellFish is designed for fishermen, consumers, and anyone interested in sustaina
 -	Detailed Fish History – View detailed information and revisit past fish classifications.
 
 
-
 ## MVVM Architecture
 
-![MVVM Architecture](https://)
-
-
-
-## Preview
-
-![Preview](https://)
-
+![MVVM architecture](https://github.com/WF-WellFish/WellFish-app/assets/85036198/a10dfd53-cefb-49ed-9300-4df9db0d893e)
