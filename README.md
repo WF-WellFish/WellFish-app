@@ -40,7 +40,7 @@ WellFish is designed for fishermen, consumers, and anyone interested in sustaina
 2.	WellDise – Fish Disease Detection
 - 	Fish Disease Diagnosis – Identify potential diseases affecting the identified fish.
 
-3.	Wawawa – Track and review your past fish identifications.
+3.	WellHistory – Track and review your past fish identifications.
 -	Fish History – Scroll through and review your past fish identifications.
 -	Detailed Fish History – View detailed information and revisit past fish classifications.
 
